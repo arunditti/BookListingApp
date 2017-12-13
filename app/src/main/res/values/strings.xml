@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Book Listing App</string>
+    <string name="search_books">Search Books</string>
+    <string name="search_button">Search</string>
+    <string name="book_title">Book Title</string>
+    <string name="author">Author</string>
+    <string name="year_of_publication">Year of publication</string>
+    <string name="summary">Summary</string>
+
+</resources>
