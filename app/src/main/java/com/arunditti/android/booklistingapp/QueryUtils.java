@@ -53,7 +53,6 @@ public class QueryUtils {
         }
 
         //Extract relevant fields from the JSON response and create a list of books
-
         List<Book> books = extractFeatureFromJson(jsonResponse);
 
         //Return the list of books
@@ -180,9 +179,13 @@ public class QueryUtils {
                 // Extract the value for the key called "publishedDate"
                 String date = volumeInfo.getString("publishedDate");
 
+                //Extract the image
+                JSONObject imageLink = volumeInfo.getJSONObject("imageLinks");
+                String image = imageLink.getString("smallThumbnail");
+
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Book book = new Book(title, author, date);
+                Book book = new Book(title, author, date, image);
 
                 // Add the new {@link Book} to the list of books.
                 books.add(book);

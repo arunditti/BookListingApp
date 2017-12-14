@@ -8,12 +8,13 @@ public class Book {
     private String mBookTitle;
     private String mBookAuthor;
     private String mYearOfpublication;
-    private String openLibraryId;
+    private String mSmallThumbnailLink;
 
-    public Book (String bookTitle, String bookAuthor, String yearOfPublication) {
+    public Book (String bookTitle, String bookAuthor, String yearOfPublication, String smallThumbnailLink) {
         mBookTitle = bookTitle;
         mBookAuthor = bookAuthor;
         mYearOfpublication = yearOfPublication;
+        mSmallThumbnailLink = smallThumbnailLink;
     }
 
     public String getBookTitle() {
@@ -28,4 +29,7 @@ public class Book {
         return mYearOfpublication;
     }
 
+    public String getSmallThumbnailLink() {
+        return mSmallThumbnailLink;
+    }
 }
