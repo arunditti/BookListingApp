@@ -180,8 +180,22 @@ public class QueryUtils {
                 String date = volumeInfo.getString("publishedDate");
 
                 //Extract the image
-                JSONObject imageLink = volumeInfo.getJSONObject("imageLinks");
-                String image = imageLink.getString("smallThumbnail");
+                //JSONObject imageLink = volumeInfo.getJSONObject("imageLinks");
+               // String image = imageLink.getString("smallThumbnail");
+                JSONObject imageLink = null;
+                try{
+                    imageLink = volumeInfo.getJSONObject("imageLinks");
+                } catch (JSONException ignored) {
+
+                }
+
+                //Convert imageLink to String
+                String image = "";
+                if(imageLink == null) {
+                    image = "null";
+                } else {
+                    image = imageLink.getString("smallThumbnail");
+                }
 
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.
