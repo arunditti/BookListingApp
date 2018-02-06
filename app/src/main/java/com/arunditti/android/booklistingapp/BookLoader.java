@@ -26,14 +26,14 @@ public class BookLoader extends AsyncTaskLoader<List<Book>> {
     public BookLoader(Context context, String url) {
         super(context);
         mUrl = url;
-        Log.i(LOG_TAG, "Book Loaded");
+        Log.i(LOG_TAG, "Book Loaded" +url);
 
     }
 
     @Override
     protected void onStartLoading() {
         Log.i(LOG_TAG, "onStartLoading is called");
-        //super.onStartLoading();
+       // super.onStartLoading();
         forceLoad();
     }
 

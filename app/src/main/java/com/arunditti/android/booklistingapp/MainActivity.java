@@ -1,12 +1,11 @@
 package com.arunditti.android.booklistingapp;
 
 import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
-
 
 import android.content.Intent;
 import android.content.Loader;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,21 +14,23 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<Book>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Book>> {
 
     private static final String LOG_TAG = MainActivity.class.getName();
 
     private static final String BOOK_REQUEST_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+    private final String API_URL = "https://www.googleapis.com/books/v1/volumes?";
 
     private static final int BOOK_LOADER_ID = 1;
 
     private Button mSearchButton;
     private EditText mSearchText;
-    private String mUrlRequestBooks = "";
 
     //Adapter for the list of books
     private BookAdapter mAdapter;
@@ -61,13 +62,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         mSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                BookAsyncTask task = new BookAsyncTask();
-//                task.execute();
 
-                updateQueryUrl(" ");
                 restartLoader();
-                Log.i(LOG_TAG, " Search value: " + mSearchText);
-
+                Log.i(LOG_TAG, "Search value: " + mSearchText.getText().toString());
             }
         });
 
@@ -78,30 +75,19 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
                 Uri bookUri = Uri.parse(currentBook.getUrl());
                 Intent websiteIntent = new Intent(Intent.ACTION_VIEW, bookUri);
                 startActivity(websiteIntent);
-
             }
         });
-    }
-
-    private String updateQueryUrl(String searchValue) {
-
-        EditText searchField = (EditText) findViewById(R.id.book_search_text_view);
-        String searchInput = searchField.getText().toString();
-
-            if(searchInput.length() == 0) {
-                return null;
-            }
-
-        searchValue = searchValue.replace(" ", "+");
-            String mUrlRequestBooks = BOOK_REQUEST_URL + searchValue;
-            return mUrlRequestBooks;
     }
 
     @Override
     public Loader<List<Book>> onCreateLoader(int i, Bundle bundle) {
         Log.i(LOG_TAG, "onCreateLoader is called");
-        updateQueryUrl(mSearchText.getText().toString());
-        return new BookLoader(this, mUrlRequestBooks);
+
+        Uri baseUri = Uri.parse(API_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder.appendQueryParameter("q", mSearchText.getText().toString());
+        Log.d("uri", "onCreateLoader: " + uriBuilder.toString());
+        return new BookLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -122,36 +108,4 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     public void restartLoader() {
         getLoaderManager().restartLoader(BOOK_LOADER_ID, null, MainActivity.this);
     }
-
-//    private class BookAsyncTask extends AsyncTask<String, Void, List<Book>> {
-//
-//        EditText searchField = (EditText) findViewById(R.id.book_search_text_view);
-//        String searchInput = searchField.getText().toString();
-//
-//        @Override
-//        protected List<Book> doInBackground(String... urls) {
-//            //Dont perform the request if there are no urls, or the first url is null
-//            if(searchInput.length() == 0) {
-//                return null;
-//            }
-//
-//            searchInput = searchInput.replace(" ", "+");
-//            String searchString = BOOK_REQUEST_URL + searchInput;
-//            List<Book> result = QueryUtils.fetchBookData(searchString);
-//            return result;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<Book> data) {
-//            //Clear the adapter of previous book results
-//            mAdapter.clear();
-//
-//            //If there is valid list of books then add them to the adapter's data set. This will trigger the listView to update
-//            if(data != null && !data.isEmpty()) {
-//                mAdapter.addAll(data);
-//            }
-//        }
-//    }
-
-
 }

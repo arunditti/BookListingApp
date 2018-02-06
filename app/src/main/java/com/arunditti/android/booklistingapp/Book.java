@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Created by arunditti on 12/13/17.
  */
 
-public class Book implements Serializable{
+public class Book {
     private String mBookTitle;
     private String mBookAuthor;
     private String mYearOfpublication;
