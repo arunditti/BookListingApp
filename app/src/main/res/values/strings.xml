@@ -6,5 +6,9 @@
     <string name="author">Author</string>
     <string name="year_of_publication">Year of publication</string>
     <string name="summary">Summary</string>
+    <string name="error_message">An error has occured. Please try again by clicking REFRESH</string>
+
+    <string name="settings_book_limit_key" translatable="false">max books</string>
+    <string name="settings_book_limit_default" translatable="false">20</string>
 
 </resources>

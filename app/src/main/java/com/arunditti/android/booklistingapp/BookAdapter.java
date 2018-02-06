@@ -1,6 +1,8 @@
 package com.arunditti.android.booklistingapp;
 
 import android.app.Activity;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +12,16 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by arunditti on 12/13/17.
  */
 
 public class BookAdapter extends ArrayAdapter<Book> {
+    private static final String TAG = BookAdapter.class.getSimpleName();
 
-    public BookAdapter(Activity context, ArrayList<Book> books) {
+    public BookAdapter(Activity context, List<Book> books) {
         super(context, 0, books);
     }
 

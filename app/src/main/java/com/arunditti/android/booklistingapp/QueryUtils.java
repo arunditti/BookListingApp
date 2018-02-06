@@ -30,9 +30,9 @@ public class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
     /**
      * Create a private constructor because no one should ever create a {@link QueryUtils} object.
-      * This class is only meant to hold static variables and methods, which can be accessed
-      * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
-      */
+     * This class is only meant to hold static variables and methods, which can be accessed
+     * directly from the class name QueryUtils (and an object instance of QueryUtils is not needed).
+     */
 
     private QueryUtils() {
     }
@@ -181,7 +181,7 @@ public class QueryUtils {
 
                 //Extract the image
                 //JSONObject imageLink = volumeInfo.getJSONObject("imageLinks");
-               // String image = imageLink.getString("smallThumbnail");
+                // String image = imageLink.getString("smallThumbnail");
                 JSONObject imageLink = null;
                 try{
                     imageLink = volumeInfo.getJSONObject("imageLinks");
@@ -197,9 +197,11 @@ public class QueryUtils {
                     image = imageLink.getString("smallThumbnail");
                 }
 
+                String url = volumeInfo.getString("infoLink");
+
                 // Create a new {@link Book} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Book book = new Book(title, author, date, image);
+                Book book = new Book(title, author, date, image, url);
 
                 // Add the new {@link Book} to the list of books.
                 books.add(book);
